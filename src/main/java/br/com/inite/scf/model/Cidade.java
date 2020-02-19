@@ -40,7 +40,7 @@ public class Cidade implements Serializable {
 	}
 	
 	
-	public Cidade(int iD, String nome, String nomeCompleto, Integer distrito, String lei, Date dtCriacao,
+	public Cidade(Integer iD, String nome, String nomeCompleto, Integer distrito, String lei, Date dtCriacao,
 			Date dtInstalacao, Integer ddd, String siglaDDD, BigDecimal latitude, BigDecimal longitude,
 			String cepPadrao, String tipo, Integer brasao, Integer idIbge, Integer idDne, Integer idSerpro,
 			Integer normalizado, Integer versao, String complIDIbge, Estado estado) {
@@ -73,7 +73,7 @@ public class Cidade implements Serializable {
 	@Id	
 	@GeneratedValue(generator="VC0A88901170181142DA0AC6B")	
 	@org.hibernate.annotations.GenericGenerator(name="VC0A88901170181142DA0AC6B", strategy="native")	
-	private int ID;
+	private Integer ID;
 	
 	@Column(name="Nome", nullable=true, length=255)	
 	private String nome;
@@ -138,12 +138,12 @@ public class Cidade implements Serializable {
 	@Basic(fetch=FetchType.LAZY)	
 	private Estado estado;
 
-	public int getID() {
+	public Integer getID() {
 		return ID;
 	}
 
 
-	public void setID(int iD) {
+	public void setID(Integer iD) {
 		ID = iD;
 	}
 
