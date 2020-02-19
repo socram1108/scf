@@ -22,7 +22,7 @@ public class PaisResource {
     @Autowired
     private PaisRepository repo;
 
-    @RequestMapping(value = "/paises", method = RequestMethod.GET)
+    @RequestMapping(value = "/pais", method = RequestMethod.GET)
     public List<Pais> Get() {
         return repo.findAll();
     }
