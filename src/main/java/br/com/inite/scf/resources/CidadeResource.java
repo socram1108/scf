@@ -17,21 +17,20 @@ import br.com.inite.scf.model.Cidade;
 import br.com.inite.scf.model.repositories.CidadeRepository;
 
 @RestController
-@RequestMapping(value = "/cidade" )
 public class CidadeResource {
 	
 	@Autowired
-    private CidadeRepository repo;
+    private CidadeRepository cidadeRepository;
 
     @RequestMapping(value = "/cidade", method = RequestMethod.GET)
     public List<Cidade> Get() {
-        return repo.findAll();
+        return cidadeRepository.findAll();
     }
 
     @RequestMapping(value = "/cidade/{id}", method = RequestMethod.GET)
     public ResponseEntity<Cidade> GetById(@PathVariable(value = "id") Integer id)
     {
-        Optional<Cidade> cidade = repo.findById(id);
+        Optional<Cidade> cidade = cidadeRepository.findById(id);
         if(cidade.isPresent())
             return new ResponseEntity<Cidade>(cidade.get(), HttpStatus.OK);
         else
@@ -41,17 +40,17 @@ public class CidadeResource {
     @RequestMapping(value = "/cidade", method =  RequestMethod.POST)
     public Cidade Post(@Validated @RequestBody Cidade cidade)
     {
-        return repo.save(cidade);
+        return cidadeRepository.save(cidade);
     }
 
     @RequestMapping(value = "/cidade/{id}", method =  RequestMethod.PUT)
-    public ResponseEntity<Cidade> Put(@PathVariable(value = "id") Integer id, @Validated @RequestBody Cidade newPais)
+    public ResponseEntity<Cidade> Put(@PathVariable(value = "id") Integer id, @Validated @RequestBody Cidade newCidade)
     {
-        Optional<Cidade> oldCidade = repo.findById(id);
+        Optional<Cidade> oldCidade = cidadeRepository.findById(id);
         if(oldCidade.isPresent()){
             Cidade cidade = oldCidade.get();
-            cidade.setNome(newPais.getNome());
-            repo.save(cidade);
+            cidade.setNome(newCidade.getNome());
+            cidadeRepository.save(cidade);
             return new ResponseEntity<Cidade>(cidade, HttpStatus.OK);
         }
         else
@@ -61,9 +60,9 @@ public class CidadeResource {
     @RequestMapping(value = "/cidade/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Object> Delete(@PathVariable(value = "id") Integer id)
     {
-        Optional<Cidade> cidade = repo.findById(id);
+        Optional<Cidade> cidade = cidadeRepository.findById(id);
         if(cidade.isPresent()){
-            repo.delete(cidade.get());
+            cidadeRepository.delete(cidade.get());
             return new ResponseEntity<>(HttpStatus.OK);
         }
         else
