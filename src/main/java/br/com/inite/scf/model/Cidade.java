@@ -353,11 +353,14 @@ public class Cidade implements Serializable {
 	}
 
 
+	
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ID;
+		result = prime * result + ((ID == null) ? 0 : ID.hashCode());
 		return result;
 	}
 
@@ -371,7 +374,10 @@ public class Cidade implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Cidade other = (Cidade) obj;
-		if (ID != other.ID)
+		if (ID == null) {
+			if (other.ID != null)
+				return false;
+		} else if (!ID.equals(other.ID))
 			return false;
 		return true;
 	}
