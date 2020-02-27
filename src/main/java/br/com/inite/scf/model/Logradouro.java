@@ -30,28 +30,28 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
-@Table(name="Estado")
+@Table(name="Logradouro")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-public class Estado implements Serializable {
+public class Logradouro implements Serializable {
 	private static final long serialVersionUID = 1L;
+	public Logradouro() {
+	}
 	
+	@OneToMany(mappedBy = "logradouro")	
+	private List<Endereco> endereco = new ArrayList<Endereco>();
+	
+
 	@Column(name="ID", nullable=false)	
 	@Id	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	
 	private int ID;
-	private String nome;
-	private String nomeCompleto;
-
-	public Estado() {
-	}
-	
-	@OneToMany(mappedBy = "estado")	
-	private List<Cidade> cidade = new ArrayList<>();
-	
 	
 	@ManyToOne	
-	@JoinColumn(name="PaisID")	
-	private Pais pais;
+	@JoinColumn(name="TipologradouroID")	
+	private Tipologradouro tipologradouro;
+	
+	@Column(name="Nome", nullable=true, length=255)	
+	private String nome;
 	
 	public void setID(int value) {
 		this.ID = value;
@@ -59,6 +59,10 @@ public class Estado implements Serializable {
 	
 	public int getID() {
 		return ID;
+	}
+	
+	public int getORMID() {
+		return getID();
 	}
 	
 	public void setNome(String value) {
@@ -69,27 +73,26 @@ public class Estado implements Serializable {
 		return nome;
 	}
 	
-	List<Cidade> getCidade() {
-		return cidade;
-	}
 
-	public void setCidade(List<Cidade> cidade) {
-		this.cidade = cidade;
-	}
-	public void setPais(br.com.inite.scf.model.Pais value) {
-		if (pais != null) {
-			pais.getEstado().remove(this);
+	public void setTipologradouro(br.com.inite.scf.model.Tipologradouro value) {
+		if (tipologradouro != null) {
+			tipologradouro.getLogradouro().remove(this);
 		}
 		if (value != null) {
-			value.getEstado().add(this);
+			value.getLogradouro().add(this);
 		}
 	}
-
-	public String getNomeCompleto() {
-		return nomeCompleto;
+	
+	public br.com.inite.scf.model.Tipologradouro getTipologradouro() {
+		return tipologradouro;
+	}
+	
+	public List<Endereco> getEndereco() {
+		return endereco;
 	}
 
-	public void setNomeCompleto(String nomeCompleto) {
-		this.nomeCompleto = nomeCompleto;
+	public void setEndereco(List<Endereco> endereco) {
+		this.endereco = endereco;
 	}
+	
 }

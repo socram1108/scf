@@ -20,7 +20,6 @@ import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -30,28 +29,28 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
-@Table(name="Estado")
+@Table(name="Bairro")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-public class Estado implements Serializable {
+public class Bairro implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Column(name="ID", nullable=false)	
 	@Id	
-	@GeneratedValue(strategy = GenerationType.IDENTITY)	
+	@GeneratedValue(generator="VC0A8890117074CB7B8902E36")	
+	@org.hibernate.annotations.GenericGenerator(name="VC0A8890117074CB7B8902E36", strategy="native")	
 	private int ID;
 	private String nome;
-	private String nomeCompleto;
-
-	public Estado() {
+	
+	public Bairro() {
 	}
 	
-	@OneToMany(mappedBy = "estado")	
-	private List<Cidade> cidade = new ArrayList<>();
+	@OneToMany(mappedBy = "bairro")	
+	private List<Endereco> endereco = new ArrayList<>();
 	
 	
 	@ManyToOne	
-	@JoinColumn(name="PaisID")	
-	private Pais pais;
+	@JoinColumn(name="CidadeID")	
+	private Cidade cidade;
 	
 	public void setID(int value) {
 		this.ID = value;
@@ -59,6 +58,10 @@ public class Estado implements Serializable {
 	
 	public int getID() {
 		return ID;
+	}
+	
+	public int getORMID() {
+		return getID();
 	}
 	
 	public void setNome(String value) {
@@ -69,27 +72,32 @@ public class Estado implements Serializable {
 		return nome;
 	}
 	
-	List<Cidade> getCidade() {
-		return cidade;
-	}
-
-	public void setCidade(List<Cidade> cidade) {
-		this.cidade = cidade;
-	}
-	public void setPais(br.com.inite.scf.model.Pais value) {
-		if (pais != null) {
-			pais.getEstado().remove(this);
+	public void setCidade(Cidade value) {
+		if (cidade != null) {
+			cidade.getBairro().remove(this);
 		}
 		if (value != null) {
-			value.getEstado().add(this);
+			value.getBairro().add(this);
 		}
 	}
-
-	public String getNomeCompleto() {
-		return nomeCompleto;
+	
+	public Cidade getCidade() {
+		return cidade;
+	}
+	
+	/**
+	 * This method is for internal use only.
+	 */
+	public void setORM_Cidade(Cidade value) {
+		this.cidade = value;
 	}
 
-	public void setNomeCompleto(String nomeCompleto) {
-		this.nomeCompleto = nomeCompleto;
+	public List<Endereco> getEndereco() {
+		return endereco;
 	}
+
+	public void setEndereco(List<Endereco> endereco) {
+		this.endereco = endereco;
+	}
+		
 }

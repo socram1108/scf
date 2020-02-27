@@ -24,41 +24,39 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
-@Table(name="Estado")
+@Table(name="Tipologradouro")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-public class Estado implements Serializable {
+public class Tipologradouro implements Serializable {
 	private static final long serialVersionUID = 1L;
+	public Tipologradouro() {
+	}
 	
+	@OneToMany(mappedBy = "tipologradouro")	
+	private List<Logradouro> logradouro = new ArrayList<>();
+	
+
 	@Column(name="ID", nullable=false)	
 	@Id	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	
 	private int ID;
+	
+	@Column(name="Nome", nullable=true, length=255)	
 	private String nome;
-	private String nomeCompleto;
 
-	public Estado() {
-	}
-	
-	@OneToMany(mappedBy = "estado")	
-	private List<Cidade> cidade = new ArrayList<>();
-	
-	
-	@ManyToOne	
-	@JoinColumn(name="PaisID")	
-	private Pais pais;
-	
 	public void setID(int value) {
 		this.ID = value;
 	}
 	
 	public int getID() {
 		return ID;
+	}
+	
+	public int getORMID() {
+		return getID();
 	}
 	
 	public void setNome(String value) {
@@ -68,28 +66,13 @@ public class Estado implements Serializable {
 	public String getNome() {
 		return nome;
 	}
+
+	public List<Logradouro> getLogradouro() {
+		return logradouro;
+	}
+
+	public void setLogradouro(List<Logradouro> logradouro) {
+		this.logradouro = logradouro;
+	}
 	
-	List<Cidade> getCidade() {
-		return cidade;
-	}
-
-	public void setCidade(List<Cidade> cidade) {
-		this.cidade = cidade;
-	}
-	public void setPais(br.com.inite.scf.model.Pais value) {
-		if (pais != null) {
-			pais.getEstado().remove(this);
-		}
-		if (value != null) {
-			value.getEstado().add(this);
-		}
-	}
-
-	public String getNomeCompleto() {
-		return nomeCompleto;
-	}
-
-	public void setNomeCompleto(String nomeCompleto) {
-		this.nomeCompleto = nomeCompleto;
-	}
 }

@@ -6,15 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.inite.scf.model.Cidade;
-import br.com.inite.scf.model.repositories.CidadeRepository;
+import br.com.inite.scf.repositories.CidadeRepository;
 
 @Service
 public class CidadeService {
 	
 	@Autowired
-	private CidadeRepository repo;
+	CidadeRepository repo;
 	
-	public Cidade buscar(int ID) {
+	public Cidade buscar(Integer ID) {
+		
 		Optional<Cidade> obj = repo.findById(ID);
 		return obj.orElse(null);
 		

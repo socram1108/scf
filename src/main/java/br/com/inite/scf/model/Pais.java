@@ -14,50 +14,25 @@
 package br.com.inite.scf.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.Table;
+import javax.persistence.*;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="Pais")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public class Pais implements Serializable {
 	private static final long serialVersionUID = 1L;
-
 	public Pais() {
 	}
 	
-	public Pais(Integer iD, String nome, String nomeCompleto, String nomeInternacional, Integer ddi, String siglaIso2,
-			String siglaIso3, Integer idSerpro, Integer idIbge, Integer idIso, Integer bandeira, Integer brasao, String nacionalidade,
-			Integer versao) {
-		super();
-		ID = iD;
-		this.nome = nome;
-		this.nomeCompleto = nomeCompleto;
-		this.nomeInternacional = nomeInternacional;
-		this.ddi = ddi;
-		this.siglaIso2 = siglaIso2;
-		this.siglaIso3 = siglaIso3;
-		this.idSerpro = idSerpro;
-		this.idIbge = idIbge;
-		this.idIso = idIso;
-		this.bandeira = bandeira;
-		this.brasao = brasao;
-		this.nacionalidade = nacionalidade;
-		this.versao = versao;
-	}
 	@Column(name="ID", nullable=false)	
 	@Id	
-	@GeneratedValue(strategy = GenerationType.AUTO)	
-	private Integer ID;
+	@GeneratedValue(generator="VC0A88901170868796770ABC9")	
+	@org.hibernate.annotations.GenericGenerator(name="VC0A88901170868796770ABC9", strategy="native")	
+	private int ID;
 	
-	@Column(name="Nome", nullable=false, length=255)	
+	@Column(name="Nome", nullable=true, length=255)	
 	private String nome;
 	
 	@Column(name="NomeCompleto", nullable=true, length=255)	
@@ -78,9 +53,9 @@ public class Pais implements Serializable {
 	@Column(name="IdSerpro", nullable=true, length=11)	
 	private Integer idSerpro;
 	
-	@Column(name="IdIbge", nullable = true, length=11)	
+	@Column(name="IdIbge", nullable=true, length=11)	
 	private Integer idIbge;
-
+	
 	@Column(name="IdIso", nullable=true, length=11)	
 	private Integer idIso;
 	
@@ -95,151 +70,188 @@ public class Pais implements Serializable {
 	
 	@Column(name="Versao", nullable=true, length=11)	
 	private Integer versao;
-
-	public Integer getID() {
+	
+	@OneToMany(targetEntity=br.com.inite.scf.model.Cidade.class)	
+	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
+	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
+	private java.util.List<Cidade> cidade = new ArrayList<>();
+	
+	@OneToMany(targetEntity=br.com.inite.scf.model.Endereco.class)	
+	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
+	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
+	private java.util.List<Endereco> endereco = new ArrayList<>();
+	
+	@OneToMany(targetEntity=br.com.inite.scf.model.Estado.class)	
+	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
+	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
+	private java.util.List<Estado> estado = new ArrayList<>();
+	
+	public void setID(int value) {
+		this.ID = value;
+	}
+	
+	public int getID() {
 		return ID;
 	}
-
-	public void setID(Integer iD) {
-		ID = iD;
+	
+	public int getORMID() {
+		return getID();
 	}
-
+	
+	public void setNome(String value) {
+		this.nome = value;
+	}
+	
 	public String getNome() {
 		return nome;
 	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
+	
+	public void setNomeCompleto(String value) {
+		this.nomeCompleto = value;
 	}
-
+	
 	public String getNomeCompleto() {
 		return nomeCompleto;
 	}
-
-	public void setNomeCompleto(String nomeCompleto) {
-		this.nomeCompleto = nomeCompleto;
+	
+	public void setNomeInternacional(String value) {
+		this.nomeInternacional = value;
 	}
-
+	
 	public String getNomeInternacional() {
 		return nomeInternacional;
 	}
-
-	public void setNomeInternacional(String nomeInternacional) {
-		this.nomeInternacional = nomeInternacional;
+	
+	public void setDdi(int value) {
+		setDdi(new Integer(value));
 	}
-
+	
+	public void setDdi(Integer value) {
+		this.ddi = value;
+	}
+	
 	public Integer getDdi() {
 		return ddi;
 	}
-
-	public void setDdi(Integer ddi) {
-		this.ddi = ddi;
+	
+	public void setSiglaIso2(String value) {
+		this.siglaIso2 = value;
 	}
-
+	
 	public String getSiglaIso2() {
 		return siglaIso2;
 	}
-
-	public void setSiglaIso2(String siglaIso2) {
-		this.siglaIso2 = siglaIso2;
+	
+	public void setSiglaIso3(String value) {
+		this.siglaIso3 = value;
 	}
-
+	
 	public String getSiglaIso3() {
 		return siglaIso3;
 	}
-
-	public void setSiglaIso3(String siglaIso3) {
-		this.siglaIso3 = siglaIso3;
+	
+	public void setIdSerpro(int value) {
+		setIdSerpro(new Integer(value));
 	}
-
+	
+	public void setIdSerpro(Integer value) {
+		this.idSerpro = value;
+	}
+	
 	public Integer getIdSerpro() {
 		return idSerpro;
 	}
-
-	public void setIdSerpro(Integer idSerpro) {
-		this.idSerpro = idSerpro;
+	
+	public void setIdIbge(int value) {
+		setIdIbge(new Integer(value));
 	}
-
+	
+	public void setIdIbge(Integer value) {
+		this.idIbge = value;
+	}
+	
 	public Integer getIdIbge() {
 		return idIbge;
 	}
-
-	public void setIdIbge(Integer idIbge) {
-		this.idIbge = idIbge;
+	
+	public void setIdIso(int value) {
+		setIdIso(new Integer(value));
 	}
-
+	
+	public void setIdIso(Integer value) {
+		this.idIso = value;
+	}
+	
 	public Integer getIdIso() {
 		return idIso;
 	}
-
-	public void setIdIso(Integer idIso) {
-		this.idIso = idIso;
+	
+	public void setBandeira(int value) {
+		setBandeira(new Integer(value));
 	}
-
+	
+	public void setBandeira(Integer value) {
+		this.bandeira = value;
+	}
+	
 	public Integer getBandeira() {
 		return bandeira;
 	}
-
-	public void setBandeira(Integer bandeira) {
-		this.bandeira = bandeira;
+	
+	public void setBrasao(int value) {
+		setBrasao(new Integer(value));
 	}
-
+	
+	public void setBrasao(Integer value) {
+		this.brasao = value;
+	}
+	
 	public Integer getBrasao() {
 		return brasao;
 	}
-
-	public void setBrasao(Integer brasao) {
-		this.brasao = brasao;
+	
+	public void setNacionalidade(String value) {
+		this.nacionalidade = value;
 	}
-
+	
 	public String getNacionalidade() {
 		return nacionalidade;
 	}
-
-	public void setNacionalidade(String nacionalidade) {
-		this.nacionalidade = nacionalidade;
+	
+	public void setVersao(int value) {
+		setVersao(new Integer(value));
 	}
-
+	
+	public void setVersao(Integer value) {
+		this.versao = value;
+	}
+	
 	public Integer getVersao() {
 		return versao;
 	}
 
-	public void setVersao(Integer versao) {
-		this.versao = versao;
+	public java.util.List<Estado> getEstado() {
+		return estado;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public void setEstado(java.util.List<Estado> estado) {
+		this.estado = estado;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ID;
-		return result;
+	public java.util.List<Endereco> getEndereco() {
+		return endereco;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Pais other = (Pais) obj;
-		if (ID != other.ID)
-			return false;
-		return true;
+	public void setEndereco(java.util.List<Endereco> endereco) {
+		this.endereco = endereco;
 	}
 
-	@Override
-	public String toString() {
-		return "Pais [ID=" + ID + ", nome=" + nome + ", nomeCompleto=" + nomeCompleto + ", nomeInternacional="
-				+ nomeInternacional + ", ddi=" + ddi + ", siglaIso2=" + siglaIso2 + ", siglaIso3=" + siglaIso3
-				+ ", idSerpro=" + idSerpro + ", idIbge=" + idIbge + ", idIso=" + idIso + ", bandeira=" + bandeira
-				+ ", brasao=" + brasao + ", nacionalidade=" + nacionalidade + ", versao=" + versao + "]";
+	public java.util.List<Cidade> getCidade() {
+		return cidade;
+	}
+
+	public void setCidade(java.util.List<Cidade> cidade) {
+		this.cidade = cidade;
 	}
 	
 	
