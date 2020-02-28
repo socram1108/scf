@@ -17,6 +17,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="Pais")
@@ -71,16 +73,19 @@ public class Pais implements Serializable {
 	@Column(name="Versao", nullable=true, length=11)	
 	private Integer versao;
 	
+	@JsonIgnore
 	@OneToMany(targetEntity=br.com.inite.scf.model.Cidade.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
 	private java.util.List<Cidade> cidade = new ArrayList<>();
 	
+	@JsonIgnore
 	@OneToMany(targetEntity=br.com.inite.scf.model.Endereco.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
 	private java.util.List<Endereco> endereco = new ArrayList<>();
 	
+	@JsonIgnore
 	@OneToMany(targetEntity=br.com.inite.scf.model.Estado.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
