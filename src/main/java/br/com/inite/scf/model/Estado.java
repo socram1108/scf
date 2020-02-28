@@ -29,8 +29,44 @@ public class Estado implements Serializable {
 	@Id	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	
 	private int ID;
+	@Column(name="Nome", nullable=true, length=255)	
 	private String nome;
+	
+	@Column(name="NomeCompleto", nullable=true, length=255)	
 	private String nomeCompleto;
+	
+	@Column(name="Sigla", nullable=true, length=255)	
+	private String sigla;
+	
+	@Column(name="Brasao", nullable=true, length=11)	
+	private Integer brasao;
+	
+	@Column(name="Bandeira", nullable=true, length=11)	
+	private Integer bandeira;
+	
+	@Column(name="IdIbge", nullable=true, length=11)	
+	private Integer idIbge;
+	
+	@Column(name="Lei", nullable=true, length=255)	
+	private String lei;
+	
+	@Column(name="DtCriacao", nullable=true)	
+	private java.util.Date dtCriacao;
+	
+	@Column(name="DtInstalacao", nullable=true)	
+	private java.util.Date dtInstalacao;
+	
+	@Column(name="DtExtincao", nullable=true)	
+	private java.util.Date dtExtincao;
+	
+	@Column(name="Observacao", nullable=true, length=255)	
+	private String observacao;
+	
+	@Column(name="Tipo", nullable=true, length=255)	
+	private String tipo;
+	
+	@Column(name="Versao", nullable=true, length=11)	
+	private Integer versao;
 
 	public Estado() {
 	}
@@ -59,6 +95,96 @@ public class Estado implements Serializable {
 		return nome;
 	}
 	
+	
+	
+	public String getSigla() {
+		return sigla;
+	}
+
+	public void setSigla(String sigla) {
+		this.sigla = sigla;
+	}
+
+	public Integer getBrasao() {
+		return brasao;
+	}
+
+	public void setBrasao(Integer brasao) {
+		this.brasao = brasao;
+	}
+
+	public Integer getBandeira() {
+		return bandeira;
+	}
+
+	public void setBandeira(Integer bandeira) {
+		this.bandeira = bandeira;
+	}
+
+	public Integer getIdIbge() {
+		return idIbge;
+	}
+
+	public void setIdIbge(Integer idIbge) {
+		this.idIbge = idIbge;
+	}
+
+	public String getLei() {
+		return lei;
+	}
+
+	public void setLei(String lei) {
+		this.lei = lei;
+	}
+
+	public java.util.Date getDtCriacao() {
+		return dtCriacao;
+	}
+
+	public void setDtCriacao(java.util.Date dtCriacao) {
+		this.dtCriacao = dtCriacao;
+	}
+
+	public java.util.Date getDtInstalacao() {
+		return dtInstalacao;
+	}
+
+	public void setDtInstalacao(java.util.Date dtInstalacao) {
+		this.dtInstalacao = dtInstalacao;
+	}
+
+	public java.util.Date getDtExtincao() {
+		return dtExtincao;
+	}
+
+	public void setDtExtincao(java.util.Date dtExtincao) {
+		this.dtExtincao = dtExtincao;
+	}
+
+	public String getObservacao() {
+		return observacao;
+	}
+
+	public void setObservacao(String observacao) {
+		this.observacao = observacao;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public Integer getVersao() {
+		return versao;
+	}
+
+	public void setVersao(Integer versao) {
+		this.versao = versao;
+	}
+
 	List<Cidade> getCidade() {
 		return cidade;
 	}

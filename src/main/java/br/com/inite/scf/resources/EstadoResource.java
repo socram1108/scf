@@ -7,19 +7,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.inite.scf.model.Cidade;
-import br.com.inite.scf.services.CidadeService;
+import br.com.inite.scf.model.Estado;
+import br.com.inite.scf.services.EstadoService;
 
 @RestController
-@RequestMapping(value = "/cidade")
-public class CidadeResource {
+@RequestMapping(value = "/estado")
+public class EstadoResource {
 	
 	@Autowired
-	private CidadeService service;
+	private EstadoService service;
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Integer id) {
-		Cidade obj = service.buscar(id);
+		Estado obj = service.buscar(id);
 		return ResponseEntity.ok().body(obj);
 		
 	}
