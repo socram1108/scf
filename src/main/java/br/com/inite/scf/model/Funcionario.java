@@ -89,7 +89,7 @@ public class Funcionario extends br.com.inite.scf.model.Pessoafisica implements 
 	@OneToOne(mappedBy="funcionarioPessoa", targetEntity=br.com.inite.scf.model.Frota.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@Basic(fetch=FetchType.LAZY)	
-	private br.com.inite.scf.model.Frota frota1;
+	private br.com.inite.scf.model.Frota frota;
 	
 	public void setFoneResid(String value) {
 		this.foneResid = value;
@@ -251,21 +251,5 @@ public class Funcionario extends br.com.inite.scf.model.Pessoafisica implements 
 		return Cargo;
 	}
 	
-	public void setFrota1(br.com.inite.scf.model.Frota value) {
-		if (this.frota1 != value) {
-			br.com.inite.scf.model.Frota lfrota1 = this.frota1;
-			this.frota1 = value;
-			if (value != null) {
-				frota1.setFuncionarioPessoa(this);
-			}
-			else {
-				lfrota1.setFuncionarioPessoa(null);
-			}
-		}
-	}
-	
-	public br.com.inite.scf.model.Frota getFrota1() {
-		return frota1;
-	}
-	
+
 }

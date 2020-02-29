@@ -14,34 +14,35 @@
 package br.com.inite.scf.model;
 
 import java.io.Serializable;
-import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
+import javax.persistence.*;
 @Entity
+@org.hibernate.annotations.Proxy(lazy=true)
 @Table(name="Abastecimento")
-public class Abastecimento extends Despesa implements Serializable {
+@Inheritance(strategy=InheritanceType.JOINED)
+@PrimaryKeyJoinColumn(name="DespesaID", referencedColumnName="ID")
+public class Abastecimento extends br.com.inite.scf.model.Despesa implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public Abastecimento() {
 	}
-
-	public Abastecimento(Integer iD, Date dataDespesa, double valor, Date dataPagamento, String descricao,
-			Integer tipoDespesa, String documentoFiscal, String forncedor, Integer tipoCombustivel, Integer quantidade, long km, double valorLitro, String observacao,
-			String responsavelAbastecimento) {
-		super(iD, dataDespesa, valor, dataPagamento, descricao, tipoDespesa, documentoFiscal, forncedor);
-		this.tipoCombustivel = tipoCombustivel;
-		this.quantidade = quantidade;
-		this.km = km;
-		this.valorLitro = valorLitro;
-		this.observacao = observacao;
-		this.responsavelAbastecimento = responsavelAbastecimento;
+	
+	public boolean equals(Object aObj) {
+		if (aObj == this)
+			return true;
+		if (!(aObj instanceof Abastecimento))
+			return false;
+		Abastecimento abastecimento = (Abastecimento)aObj;
+		if (getID() != abastecimento.getID())
+			return false;
+		return true;
 	}
-
-
-
+	
+	public int hashCode() {
+		int hashcode = 0;
+		hashcode = hashcode + (int) getID();
+		return hashcode;
+	}
+	
 	@Column(name="TipoCombustivel", nullable=true, length=11)	
 	private Integer tipoCombustivel;
 	
@@ -59,6 +60,61 @@ public class Abastecimento extends Despesa implements Serializable {
 	
 	@Column(name="ResponsavelAbastecimento", nullable=true, length=255)	
 	private String responsavelAbastecimento;
-
+	
+	public void setTipoCombustivel(int value) {
+		setTipoCombustivel(new Integer(value));
+	}
+	
+	public void setTipoCombustivel(Integer value) {
+		this.tipoCombustivel = value;
+	}
+	
+	public Integer getTipoCombustivel() {
+		return tipoCombustivel;
+	}
+	
+	public void setQuantidade(int value) {
+		setQuantidade(new Integer(value));
+	}
+	
+	public void setQuantidade(Integer value) {
+		this.quantidade = value;
+	}
+	
+	public Integer getQuantidade() {
+		return quantidade;
+	}
+	
+	public void setKm(long value) {
+		this.km = value;
+	}
+	
+	public long getKm() {
+		return km;
+	}
+	
+	public void setValorLitro(double value) {
+		this.valorLitro = value;
+	}
+	
+	public double getValorLitro() {
+		return valorLitro;
+	}
+	
+	public void setObservacao(String value) {
+		this.observacao = value;
+	}
+	
+	public String getObservacao() {
+		return observacao;
+	}
+	
+	public void setResponsavelAbastecimento(String value) {
+		this.responsavelAbastecimento = value;
+	}
+	
+	public String getResponsavelAbastecimento() {
+		return responsavelAbastecimento;
+	}
 	
 }

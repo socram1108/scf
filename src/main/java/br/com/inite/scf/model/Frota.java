@@ -14,8 +14,7 @@
 package br.com.inite.scf.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 
 import javax.persistence.*;
 @Entity
@@ -26,23 +25,18 @@ public class Frota implements Serializable {
 	private static final long serialVersionUID = 1L;
 	public Frota() {
 	}
-	
-	@OneToMany(targetEntity=br.com.inite.scf.model.Frete.class)	
-	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
-	@JoinColumn(name="FrotaID", nullable=false)	
-	private List<Frete> frete = new ArrayList<Frete>();
 
 	@Column(name="ID", nullable=false)	
 	@Id	
-	@GeneratedValue(generator="VC0A8890117074CB7CE502E3C")	
-	@org.hibernate.annotations.GenericGenerator(name="VC0A8890117074CB7CE502E3C", strategy="native")	
+	@GeneratedValue(generator="VC0A889011708DF594070B814")	
+	@org.hibernate.annotations.GenericGenerator(name="VC0A889011708DF594070B814", strategy="native")	
 	private int ID;
 	
 	@ManyToOne(targetEntity=br.com.inite.scf.model.Veiculos.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="VeiculosID", referencedColumnName="ID", insertable=false, updatable=false) })	
 	@Basic(fetch=FetchType.LAZY)	
-	private Veiculos veiculos;
+	private br.com.inite.scf.model.Veiculos veiculos;
 	
 	@OneToOne(targetEntity=br.com.inite.scf.model.Funcionario.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
@@ -61,6 +55,11 @@ public class Frota implements Serializable {
 	
 	@Column(name="Veicculo", nullable=true, length=11)	
 	private Integer veicculo;
+	
+	@OneToMany(mappedBy="frota", targetEntity=br.com.inite.scf.model.Frete.class)	
+	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
+	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
+	private java.util.Set<Frota> frete = new HashSet<>();
 	
 	public void setID(int value) {
 		this.ID = value;
@@ -110,42 +109,5 @@ public class Frota implements Serializable {
 		return veicculo;
 	}
 	
-	public void setFuncionarioPessoa(br.com.inite.scf.model.Funcionario value) {
-		if (this.funcionarioPessoa != value) {
-			br.com.inite.scf.model.Funcionario lfuncionarioPessoa = this.funcionarioPessoa;
-			this.funcionarioPessoa = value;
-			if (value != null) {
-				funcionarioPessoa.setFrota1(this);
-			}
-			else {
-				lfuncionarioPessoa.setFrota1(null);
-			}
-		}
-	}
 	
-	public br.com.inite.scf.model.Funcionario getFuncionarioPessoa() {
-		return funcionarioPessoa;
-	}
-	
-	public void setVeiculos(br.com.inite.scf.model.Veiculos value) {
-		if (veiculos != null) {
-			veiculos.getFrota().remove(this);
-		}
-		if (value != null) {
-			value.getFrota().add(this);
-		}
-	}
-	
-	public br.com.inite.scf.model.Veiculos getVeiculos() {
-		return veiculos;
-	}
-	
-	public List<Frete> getFrete() {
-		return frete;
-	}
-
-	public void setFrete(List<Frete> frete) {
-		this.frete = frete;
-	}
-
 }
