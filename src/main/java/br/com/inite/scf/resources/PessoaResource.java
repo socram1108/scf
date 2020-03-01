@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.inite.scf.model.Cidade;
 import br.com.inite.scf.model.Pessoa;
-import br.com.inite.scf.services.CidadeService;
 import br.com.inite.scf.services.PessoaService;
 
 @RestController

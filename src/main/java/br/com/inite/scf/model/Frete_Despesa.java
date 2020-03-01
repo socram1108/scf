@@ -21,6 +21,8 @@ import javax.persistence.*;
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 @IdClass(Frete_DespesaPK.class)
 public class Frete_Despesa implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	public Frete_Despesa() {
 	}
 	

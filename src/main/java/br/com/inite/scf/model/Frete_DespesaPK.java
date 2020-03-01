@@ -17,6 +17,8 @@ import java.io.Serializable;
 import javax.persistence.*;
 @Embeddable
 public class Frete_DespesaPK implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	public boolean equals(Object aObj) {
 		if (aObj == this)
 			return true;

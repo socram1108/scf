@@ -15,6 +15,7 @@ package br.com.inite.scf.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -27,7 +28,10 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import br.com.inite.scf.model.enuns.TipoPessoa;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="Pessoa")
@@ -43,6 +47,11 @@ public class Pessoa implements Serializable {
 	@JoinTable(name="Pessoa_Endereco", joinColumns={ @JoinColumn(name="PessoaID") }, inverseJoinColumns={ @JoinColumn(name="EnderecoID") })	
 	private List<Endereco> endereco = new ArrayList<>();
 	
+	@OneToMany(mappedBy="pessoa", targetEntity=br.com.inite.scf.model.Contato.class)	
+	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
+	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
+	private java.util.Set<Contato> contato = new HashSet<>();
+	
 	@Column(name="ID", nullable=false)	
 	@Id	
 	@GeneratedValue(generator="VC0A8890117074CB7C2902E39")	
@@ -50,7 +59,7 @@ public class Pessoa implements Serializable {
 	private int ID;
 	
 	@Column(name="TipoPessoa", nullable=false, length=11)	
-	private int tipoPessoa;
+	private Integer tipoPessoa;
 	
 	@Column(name="Nome", nullable=true, length=255)	
 	private String nome;
@@ -68,12 +77,12 @@ public class Pessoa implements Serializable {
 		return ID;
 	}
 	
-	public void setTipoPessoa(int value) {
-		this.tipoPessoa = value;
+	public void setTipoPessoa(TipoPessoa tipoPessoa) {
+		this.tipoPessoa = tipoPessoa.getCodTipoPessoa();
 	}
 	
-	public int getTipoPessoa() {
-		return tipoPessoa;
+	public TipoPessoa getTipoPessoa() {
+		return TipoPessoa.toEnum(tipoPessoa);
 	}
 	
 	public void setNome(String value) {
@@ -98,6 +107,14 @@ public class Pessoa implements Serializable {
 
 	public void setEndereco(List<Endereco> endereco) {
 		this.endereco = endereco;
+	}
+
+	public java.util.Set<Contato> getContato() {
+		return contato;
+	}
+
+	public void setContato(java.util.Set<Contato> contato) {
+		this.contato = contato;
 	}
 	
 }

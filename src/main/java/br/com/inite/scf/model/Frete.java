@@ -22,6 +22,8 @@ import javax.persistence.*;
 @Table(name="Frete")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public class Frete implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	public Frete() {
 	}
 	
