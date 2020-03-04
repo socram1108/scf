@@ -1,4 +1,3 @@
-
 /**
  * "Visual Paradigm: DO NOT MODIFY THIS FILE!"
  * 
@@ -15,31 +14,34 @@
 package br.com.inite.scf.model;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
 @Entity
 @org.hibernate.annotations.Proxy(lazy=true)
 @Table(name="Despesa")
 @Inheritance(strategy=InheritanceType.JOINED)
-public abstract class Despesa implements Serializable {
+public class Despesa implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	public Despesa() {
 	}
-		
+	
 	@Column(name="ID", nullable=false)	
 	@Id	
-	@GeneratedValue(generator="VC0A889011708DF5963A0B81B")	
-	@org.hibernate.annotations.GenericGenerator(name="VC0A889011708DF5963A0B81B", strategy="native")	
+	@GeneratedValue(generator="VC0A88901170989BA9E400B3D")	
+	@org.hibernate.annotations.GenericGenerator(name="VC0A88901170989BA9E400B3D", strategy="native")	
 	private int ID;
 	
 	@Column(name="Valor", nullable=false)	
@@ -54,10 +56,11 @@ public abstract class Despesa implements Serializable {
 	@Column(name="Forncedor", nullable=true, length=255)	
 	private String forncedor;
 	
-	@OneToMany(mappedBy="despesa", targetEntity=br.com.inite.scf.model.DespesasFrete.class)	
-	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
-	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
-	private Set<Despesa> despesasfretes = new HashSet<Despesa>();
+	@ManyToOne(targetEntity=br.com.inite.scf.model.Frete.class)	
+	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
+	@JoinColumns({ @JoinColumn(name="FreteID", referencedColumnName="ID", insertable=false, updatable=false) })	
+	@Basic(fetch=FetchType.LAZY)	
+	private br.com.inite.scf.model.Frete frete;
 	
 	public void setID(int value) {
 		this.ID = value;
@@ -65,10 +68,6 @@ public abstract class Despesa implements Serializable {
 	
 	public int getID() {
 		return ID;
-	}
-	
-	public int getORMID() {
-		return getID();
 	}
 	
 	public void setValor(double value) {
@@ -102,14 +101,18 @@ public abstract class Despesa implements Serializable {
 	public String getForncedor() {
 		return forncedor;
 	}
-
-	public Set<Despesa> getDespesasfretes() {
-		return despesasfretes;
-	}
-
-	public void setDespesasfretes(Set<Despesa> despesasfretes) {
-		this.despesasfretes = despesasfretes;
-	}
-
 	
+	public void setFrete(br.com.inite.scf.model.Frete value) {
+		if (frete != null) {
+			frete.getDespesa().remove(this);
+		}
+		if (value != null) {
+			value.getDespesa().add(this);
+		}
+	}
+	
+	public br.com.inite.scf.model.Frete getFrete() {
+		return frete;
+	}
+
 }

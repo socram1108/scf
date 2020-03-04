@@ -15,7 +15,6 @@ package br.com.inite.scf.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -29,6 +28,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Table;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
@@ -38,28 +38,10 @@ public class Veiculos implements Serializable {
 	private static final long serialVersionUID = 1L;
 	public Veiculos() {
 	}
-	
-	@OneToMany(targetEntity=br.com.inite.scf.model.Frota.class)	
-	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
-	@JoinColumn(name="VeiculosID", nullable=false)	
-	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)
-	private List<Frota> frota = new ArrayList<>();
-	
-	@OneToMany(targetEntity=br.com.inite.scf.model.Manutencao.class)	
-	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
-	@JoinColumn(name="VeiculosID", nullable=false)	
-	private List<Manutencao> manutencao = new ArrayList<>();
-	
-	
-	@OneToMany(targetEntity=br.com.inite.scf.model.Obrigacao.class)	
-	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
-	@JoinColumn(name="VeiculosID", nullable=false)	
-	private List<Obrigacao> obrigacao = new ArrayList<>();
-
 	@Column(name="ID", nullable=false)	
 	@Id	
-	@GeneratedValue(generator="VC0A8890117074CB7DB102E41")	
-	@org.hibernate.annotations.GenericGenerator(name="VC0A8890117074CB7DB102E41", strategy="native")	
+	@GeneratedValue(generator="VC0A8890117098C1CEDE07A4F")	
+	@org.hibernate.annotations.GenericGenerator(name="VC0A8890117098C1CEDE07A4F", strategy="native")	
 	private int ID;
 	
 	@ManyToOne(targetEntity=br.com.inite.scf.model.Empresa.class)	
@@ -115,6 +97,24 @@ public class Veiculos implements Serializable {
 	
 	@Column(name="Observacao", nullable=true, length=255)	
 	private String observacao;
+	
+	@OneToMany(mappedBy="veiculos", targetEntity=br.com.inite.scf.model.Frota.class)	
+	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
+	@OrderBy(value="ID")	
+	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
+	private java.util.List<Frota> frota = new ArrayList<>();
+	
+	@OneToMany(targetEntity=br.com.inite.scf.model.Manutencao.class)	
+	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
+	@JoinColumn(name="VeiculosID", nullable=false)	
+	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
+	private java.util.List<Manutencao> manutencao = new ArrayList<>();
+	
+	@OneToMany(targetEntity=br.com.inite.scf.model.Obrigacao.class)	
+	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
+	@JoinColumn(name="VeiculosID", nullable=false)		
+	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
+	private java.util.List<Obrigacao> obrigacao = new ArrayList<>();
 	
 	public void setID(int value) {
 		this.ID = value;
@@ -263,49 +263,29 @@ public class Veiculos implements Serializable {
 	public String getObservacao() {
 		return observacao;
 	}
-	
-	public void setEmpresa(br.com.inite.scf.model.Empresa value) {
-		if (empresa != null) {
-			empresa.getVeiculos().remove(this);
-		}
-		if (value != null) {
-			value.getVeiculos().add(this);
-		}
-	}
-	
-	public br.com.inite.scf.model.Empresa getEmpresa() {
-		return empresa;
-	}
-	
-	/**
-	 * This method is for internal use only.
-	 */
-	public void setORM_Empresa(br.com.inite.scf.model.Empresa value) {
-		this.empresa = value;
-	}
 
-	public List<Frota> getFrota() {
-		return frota;
-	}
-
-	public void setFrota(List<Frota> frota) {
-		this.frota = frota;
-	}
-
-	public List<Manutencao> getManutencao() {
-		return manutencao;
-	}
-
-	public void setManutencao(List<Manutencao> manutencao) {
-		this.manutencao = manutencao;
-	}
-
-	public List<Obrigacao> getObrigacao() {
+	public java.util.List<Obrigacao> getObrigacao() {
 		return obrigacao;
 	}
 
-	public void setObrigacao(List<Obrigacao> obrigacao) {
+	public void setObrigacao(java.util.List<Obrigacao> obrigacao) {
 		this.obrigacao = obrigacao;
+	}
+
+	public java.util.List<Manutencao> getManutencao() {
+		return manutencao;
+	}
+
+	public void setManutencao(java.util.List<Manutencao> manutencao) {
+		this.manutencao = manutencao;
+	}
+
+	public java.util.List<Frota> getFrota() {
+		return frota;
+	}
+
+	public void setFrota(java.util.List<Frota> frota) {
+		this.frota = frota;
 	}
 	
 }

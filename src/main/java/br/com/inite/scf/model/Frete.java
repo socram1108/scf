@@ -1,3 +1,4 @@
+
 /**
  * "Visual Paradigm: DO NOT MODIFY THIS FILE!"
  * 
@@ -14,30 +15,46 @@
 package br.com.inite.scf.model;
 
 import java.io.Serializable;
-import java.util.HashSet;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="Frete")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
 public class Frete implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	public Frete() {
-	}
-	
-	@Column(name="ID", nullable=false)	
-	@Id	
-	@GeneratedValue(generator="VC0A889011708DF5960F0B81A")	
-	@org.hibernate.annotations.GenericGenerator(name="VC0A889011708DF5960F0B81A", strategy="native")	
-	private int ID;
 	
 	@ManyToOne(targetEntity=br.com.inite.scf.model.Frota.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="FrotaID", referencedColumnName="ID") })	
 	@Basic(fetch=FetchType.LAZY)	
 	private br.com.inite.scf.model.Frota frota;
+	
+	@OneToMany(mappedBy = "frete")
+	private List<Despesa> despesa = new ArrayList<>();
+	
+	@Column(name="ID", nullable=false)	
+	@Id	
+	@GeneratedValue(generator="VC0A8890117098C1CF2407A50")	
+	@org.hibernate.annotations.GenericGenerator(name="VC0A8890117098C1CF2407A50", strategy="native")	
+	private int ID;
 	
 	@Column(name="Origem", nullable=true, length=255)	
 	private String origem;
@@ -66,122 +83,142 @@ public class Frete implements Serializable {
 	@Column(name="Adiantamento", nullable=true)	
 	private Double adiantamento;
 	
-	@OneToMany(mappedBy="frete", targetEntity=br.com.inite.scf.model.DespesasFrete.class)	
-	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
-	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
-	private java.util.Set<Frete> despesasfretes = new HashSet<>();
-	
-	public void setID(int value) {
-		this.ID = value;
+	public Frete() {
 	}
-	
+		
+	public Frete(int iD, String origem, String destino, Timestamp dataSaida, Timestamp dataChegada, Integer kmInicial,
+			Integer kmFinal, Double valorFrete, Double comissao, Double adiantamento) {
+		super();
+		ID = iD;
+		this.origem = origem;
+		this.destino = destino;
+		this.dataSaida = dataSaida;
+		this.dataChegada = dataChegada;
+		this.kmInicial = kmInicial;
+		this.kmFinal = kmFinal;
+		this.valorFrete = valorFrete;
+		this.comissao = comissao;
+		this.adiantamento = adiantamento;
+	}
+
 	public int getID() {
 		return ID;
 	}
-	
-	public int getORMID() {
-		return getID();
+
+	public void setID(int iD) {
+		ID = iD;
 	}
-	
-	public void setOrigem(String value) {
-		this.origem = value;
-	}
-	
+
 	public String getOrigem() {
 		return origem;
 	}
-	
-	public void setDestino(String value) {
-		this.destino = value;
+
+	public void setOrigem(String origem) {
+		this.origem = origem;
 	}
-	
+
 	public String getDestino() {
 		return destino;
 	}
-	
-	public void setDataSaida(java.sql.Timestamp value) {
-		this.dataSaida = value;
+
+	public void setDestino(String destino) {
+		this.destino = destino;
 	}
-	
+
 	public java.sql.Timestamp getDataSaida() {
 		return dataSaida;
 	}
-	
-	public void setDataChegada(java.sql.Timestamp value) {
-		this.dataChegada = value;
+
+	public void setDataSaida(java.sql.Timestamp dataSaida) {
+		this.dataSaida = dataSaida;
 	}
-	
+
 	public java.sql.Timestamp getDataChegada() {
 		return dataChegada;
 	}
-	
-	public void setKmInicial(int value) {
-		setKmInicial(new Integer(value));
+
+	public void setDataChegada(java.sql.Timestamp dataChegada) {
+		this.dataChegada = dataChegada;
 	}
-	
-	public void setKmInicial(Integer value) {
-		this.kmInicial = value;
-	}
-	
+
 	public Integer getKmInicial() {
 		return kmInicial;
 	}
-	
-	public void setKmFinal(int value) {
-		setKmFinal(new Integer(value));
+
+	public void setKmInicial(Integer kmInicial) {
+		this.kmInicial = kmInicial;
 	}
-	
-	public void setKmFinal(Integer value) {
-		this.kmFinal = value;
-	}
-	
+
 	public Integer getKmFinal() {
 		return kmFinal;
 	}
-	
-	public void setValorFrete(double value) {
-		setValorFrete(new Double(value));
+
+	public void setKmFinal(Integer kmFinal) {
+		this.kmFinal = kmFinal;
 	}
-	
-	public void setValorFrete(Double value) {
-		this.valorFrete = value;
-	}
-	
+
 	public Double getValorFrete() {
 		return valorFrete;
 	}
-	
-	public void setComissao(double value) {
-		setComissao(new Double(value));
+
+	public void setValorFrete(Double valorFrete) {
+		this.valorFrete = valorFrete;
 	}
-	
-	public void setComissao(Double value) {
-		this.comissao = value;
-	}
-	
+
 	public Double getComissao() {
 		return comissao;
 	}
-	
-	public void setAdiantamento(double value) {
-		setAdiantamento(new Double(value));
+
+	public void setComissao(Double comissao) {
+		this.comissao = comissao;
 	}
-	
-	public void setAdiantamento(Double value) {
-		this.adiantamento = value;
-	}
-	
+
 	public Double getAdiantamento() {
 		return adiantamento;
 	}
 
-	public java.util.Set<Frete> getDespesasfretes() {
-		return despesasfretes;
+	public void setAdiantamento(Double adiantamento) {
+		this.adiantamento = adiantamento;
+	}
+	@JsonBackReference
+	public List<Despesa> getDespesa() {
+		return despesa;
 	}
 
-	public void setDespesasfretes(java.util.Set<Frete> despesasfretes) {
-		this.despesasfretes = despesasfretes;
+	public void setDespesa(List<Despesa> despesas) {
+		this.despesa = despesas;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ID;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Frete other = (Frete) obj;
+		if (ID != other.ID)
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Frete [ID=" + ID + ", origem=" + origem + ", destino=" + destino + ", dataSaida=" + dataSaida
+				+ ", dataChegada=" + dataChegada + ", kmInicial=" + kmInicial + ", kmFinal=" + kmFinal + ", valorFrete="
+				+ valorFrete + ", comissao=" + comissao + ", adiantamento=" + adiantamento + "]";
+	}
+
+
 	
-
+	
 }

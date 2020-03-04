@@ -14,9 +14,21 @@
 package br.com.inite.scf.model;
 
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.ArrayList;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="Frota")
@@ -28,21 +40,15 @@ public class Frota implements Serializable {
 
 	@Column(name="ID", nullable=false)	
 	@Id	
-	@GeneratedValue(generator="VC0A889011708DF594070B814")	
-	@org.hibernate.annotations.GenericGenerator(name="VC0A889011708DF594070B814", strategy="native")	
+	@GeneratedValue(generator="VC0A8890117098C1CCE607A4A")	
+	@org.hibernate.annotations.GenericGenerator(name="VC0A8890117098C1CCE607A4A", strategy="native")	
 	private int ID;
 	
 	@ManyToOne(targetEntity=br.com.inite.scf.model.Veiculos.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
-	@JoinColumns({ @JoinColumn(name="VeiculosID", referencedColumnName="ID", insertable=false, updatable=false) })	
+	@JoinColumns({ @JoinColumn(name="VeiculosID", referencedColumnName="ID") })	
 	@Basic(fetch=FetchType.LAZY)	
 	private br.com.inite.scf.model.Veiculos veiculos;
-	
-	@OneToOne(targetEntity=br.com.inite.scf.model.Funcionario.class)	
-	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
-	@JoinColumns({ @JoinColumn(name="FuncionarioPessoaID") })	
-	@Basic(fetch=FetchType.LAZY)	
-	private br.com.inite.scf.model.Funcionario funcionarioPessoa;
 	
 	@Column(name="DataInicio", nullable=true)	
 	private java.util.Date dataInicio;
@@ -56,10 +62,16 @@ public class Frota implements Serializable {
 	@Column(name="Veicculo", nullable=true, length=11)	
 	private Integer veicculo;
 	
+	@ManyToOne(targetEntity=br.com.inite.scf.model.Funcionario.class)	
+	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
+	@JoinColumns({ @JoinColumn(name="FuncionarioPessoaID", referencedColumnName="PessoaID") })	
+	@Basic(fetch=FetchType.LAZY)	
+	private br.com.inite.scf.model.Funcionario funcionarioPessoa;
+	
 	@OneToMany(mappedBy="frota", targetEntity=br.com.inite.scf.model.Frete.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
-	private java.util.Set<Frota> frete = new HashSet<>();
+	private java.util.List<Frete> frete = new ArrayList<>();
 	
 	public void setID(int value) {
 		this.ID = value;
@@ -107,6 +119,27 @@ public class Frota implements Serializable {
 	
 	public Integer getVeicculo() {
 		return veicculo;
+	}
+	
+	public void setFuncionarioPessoa(br.com.inite.scf.model.Funcionario value) {
+		if (funcionarioPessoa != null) {
+			funcionarioPessoa.getFrota().remove(this);
+		}
+		if (value != null) {
+			value.getFrota().add(this);
+		}
+	}
+	
+	public br.com.inite.scf.model.Funcionario getFuncionarioPessoa() {
+		return funcionarioPessoa;
+	}
+
+	public java.util.List<Frete> getFrete() {
+		return frete;
+	}
+
+	public void setFrete(java.util.List<Frete> frete) {
+		this.frete = frete;
 	}
 	
 	

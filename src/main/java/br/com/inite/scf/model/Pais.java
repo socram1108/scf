@@ -16,7 +16,15 @@ package br.com.inite.scf.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
@@ -30,9 +38,8 @@ public class Pais implements Serializable {
 	
 	@Column(name="ID", nullable=false)	
 	@Id	
-	@GeneratedValue(generator="VC0A88901170868796770ABC9")	
-	@org.hibernate.annotations.GenericGenerator(name="VC0A88901170868796770ABC9", strategy="native")	
-	private int ID;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer ID;
 	
 	@Column(name="Nome", nullable=true, length=255)	
 	private String nome;
@@ -91,16 +98,12 @@ public class Pais implements Serializable {
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
 	private java.util.List<Estado> estado = new ArrayList<>();
 	
-	public void setID(int value) {
+	public void setID(Integer value) {
 		this.ID = value;
 	}
 	
-	public int getID() {
+	public Integer getID() {
 		return ID;
-	}
-	
-	public int getORMID() {
-		return getID();
 	}
 	
 	public void setNome(String value) {

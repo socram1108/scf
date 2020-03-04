@@ -14,7 +14,17 @@
 package br.com.inite.scf.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.ArrayList;
+
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=true)
 @Table(name="Funcionario")
@@ -22,10 +32,9 @@ import javax.persistence.*;
 @DiscriminatorValue("Funcionario")
 public class Funcionario extends br.com.inite.scf.model.Pessoafisica implements Serializable {
 	private static final long serialVersionUID = 1L;
-
 	public Funcionario() {
 	}
-	
+
 	@Column(name="FoneResid", nullable=true, length=255)	
 	private String foneResid;
 	
@@ -86,10 +95,11 @@ public class Funcionario extends br.com.inite.scf.model.Pessoafisica implements 
 	@Column(name="Cargo", nullable=true, length=255)	
 	private String Cargo;
 	
-	@OneToOne(mappedBy="funcionarioPessoa", targetEntity=br.com.inite.scf.model.Frota.class)	
+	@JsonIgnore
+	@OneToMany(mappedBy="funcionarioPessoa", targetEntity=br.com.inite.scf.model.Frota.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
-	@Basic(fetch=FetchType.LAZY)	
-	private br.com.inite.scf.model.Frota frota;
+	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
+	private java.util.List<Frota> frota = new ArrayList<>();
 	
 	public void setFoneResid(String value) {
 		this.foneResid = value;
@@ -250,6 +260,13 @@ public class Funcionario extends br.com.inite.scf.model.Pessoafisica implements 
 	public String getCargo() {
 		return Cargo;
 	}
-	
 
+	public java.util.List<Frota> getFrota() {
+		return frota;
+	}
+
+	public void setFrota(java.util.List<Frota> frota) {
+		this.frota = frota;
+	}
+	
 }
