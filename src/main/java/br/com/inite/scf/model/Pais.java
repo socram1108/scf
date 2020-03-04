@@ -80,19 +80,19 @@ public class Pais implements Serializable {
 	@Column(name="Versao", nullable=true, length=11)	
 	private Integer versao;
 	
-	@JsonIgnore
+	
 	@OneToMany(targetEntity=br.com.inite.scf.model.Cidade.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
 	private java.util.List<Cidade> cidade = new ArrayList<>();
 	
-	@JsonIgnore
+	
 	@OneToMany(targetEntity=br.com.inite.scf.model.Endereco.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
 	private java.util.List<Endereco> endereco = new ArrayList<>();
 	
-	@JsonIgnore
+	
 	@OneToMany(targetEntity=br.com.inite.scf.model.Estado.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
@@ -237,27 +237,28 @@ public class Pais implements Serializable {
 	public Integer getVersao() {
 		return versao;
 	}
-
+	@JsonIgnore
 	public java.util.List<Estado> getEstado() {
 		return estado;
 	}
-
+	@JsonIgnore
 	public void setEstado(java.util.List<Estado> estado) {
 		this.estado = estado;
 	}
-
+	@JsonIgnore
 	public java.util.List<Endereco> getEndereco() {
 		return endereco;
 	}
-
+	@JsonIgnore
 	public void setEndereco(java.util.List<Endereco> endereco) {
 		this.endereco = endereco;
 	}
-
+	
+	@JsonIgnore
 	public java.util.List<Cidade> getCidade() {
 		return cidade;
 	}
-
+	@JsonIgnore
 	public void setCidade(java.util.List<Cidade> cidade) {
 		this.cidade = cidade;
 	}

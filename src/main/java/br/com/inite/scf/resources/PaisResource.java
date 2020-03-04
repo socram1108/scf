@@ -40,9 +40,9 @@ public class PaisResource {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> gravar(@RequestBody Pais obj, @PathVariable Integer id){
+	public ResponseEntity<Void> gravar(@RequestBody Pais obj, @PathVariable Integer id) throws ObjectNotFoundException{
 		obj.setID(id);
-		obj = service.inserirPais(obj);
+		obj = service.gravarPais(obj);
 		return ResponseEntity.noContent().build();
 	}
 	

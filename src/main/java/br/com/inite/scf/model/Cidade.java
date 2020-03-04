@@ -31,6 +31,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="Cidade")
@@ -59,6 +60,7 @@ public class Cidade implements Serializable {
 	@JoinColumn(name="EstadoID")	
 	private Estado estado;
 	
+	@JsonManagedReference
 	@ManyToOne	
 	@JoinColumn(name="PaisID")	
 	private Pais pais;
