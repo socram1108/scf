@@ -18,7 +18,15 @@ import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="Empresa")
@@ -29,6 +37,7 @@ public class Empresa extends br.com.inite.scf.model.Pessoajuridica implements Se
 	public Empresa() {
 	}
 	
+	@JsonBackReference
 	@OneToMany(targetEntity=br.com.inite.scf.model.Veiculo.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumn(name="EmpresaPessoaID", nullable=false)	

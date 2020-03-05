@@ -31,6 +31,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import br.com.inite.scf.model.enuns.TipoPessoa;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
@@ -42,11 +44,13 @@ public class Pessoa implements Serializable {
 	public Pessoa() {
 	}
 	
+	@JsonManagedReference
 	@ManyToMany(targetEntity=br.com.inite.scf.model.Endereco.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinTable(name="Pessoa_Endereco", joinColumns={ @JoinColumn(name="PessoaID") }, inverseJoinColumns={ @JoinColumn(name="EnderecoID") })	
 	private List<Endereco> endereco = new ArrayList<>();
 	
+	@JsonManagedReference
 	@OneToMany(mappedBy="pessoa", targetEntity=br.com.inite.scf.model.Contato.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	

@@ -29,6 +29,9 @@ import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="Frota")
@@ -44,6 +47,7 @@ public class Frota implements Serializable {
 	@org.hibernate.annotations.GenericGenerator(name="VC0A8890117098C1CCE607A4A", strategy="native")	
 	private Integer ID;
 	
+	@JsonManagedReference
 	@ManyToOne(targetEntity=br.com.inite.scf.model.Veiculo.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="VeiculosID", referencedColumnName="ID") })	
@@ -62,12 +66,14 @@ public class Frota implements Serializable {
 	@Column(name="Veicculo", nullable=true, length=11)	
 	private Integer veicculo;
 	
+	@JsonManagedReference
 	@ManyToOne(targetEntity=br.com.inite.scf.model.Funcionario.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="FuncionarioPessoaID", referencedColumnName="PessoaID") })	
 	@Basic(fetch=FetchType.LAZY)	
 	private br.com.inite.scf.model.Funcionario funcionarioPessoa;
 	
+	@JsonBackReference
 	@OneToMany(mappedBy="frota", targetEntity=br.com.inite.scf.model.Frete.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	

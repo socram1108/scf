@@ -34,6 +34,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="Frete")
@@ -41,12 +42,14 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class Frete implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@JsonManagedReference
 	@ManyToOne(targetEntity=br.com.inite.scf.model.Frota.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="FrotaID", referencedColumnName="ID") })	
 	@Basic(fetch=FetchType.LAZY)	
 	private br.com.inite.scf.model.Frota frota;
 	
+	@JsonManagedReference
 	@OneToMany(mappedBy = "frete")
 	private List<Despesa> despesa = new ArrayList<>();
 	

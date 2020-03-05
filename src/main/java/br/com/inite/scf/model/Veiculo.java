@@ -30,6 +30,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="Veiculos")
@@ -44,6 +47,7 @@ public class Veiculo implements Serializable {
 	@org.hibernate.annotations.GenericGenerator(name="VC0A8890117098C1CEDE07A4F", strategy="native")	
 	private Integer ID;
 	
+	@JsonManagedReference
 	@ManyToOne(targetEntity=br.com.inite.scf.model.Empresa.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="EmpresaPessoaID", referencedColumnName="PessoaID", insertable=false, updatable=false) })	
@@ -98,18 +102,21 @@ public class Veiculo implements Serializable {
 	@Column(name="Observacao", nullable=true, length=255)	
 	private String observacao;
 	
+	@JsonBackReference
 	@OneToMany(mappedBy="veiculos", targetEntity=br.com.inite.scf.model.Frota.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@OrderBy(value="ID")	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
 	private java.util.List<Frota> frota = new ArrayList<>();
 	
+	@JsonManagedReference
 	@OneToMany(targetEntity=br.com.inite.scf.model.Manutencao.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumn(name="VeiculosID", nullable=false)	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
 	private java.util.List<Manutencao> manutencao = new ArrayList<>();
 	
+	@JsonManagedReference
 	@OneToMany(targetEntity=br.com.inite.scf.model.Obrigacao.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumn(name="VeiculosID", nullable=false)		
@@ -278,6 +285,14 @@ public class Veiculo implements Serializable {
 
 	public void setFrota(java.util.List<Frota> frota) {
 		this.frota = frota;
+	}
+
+	public br.com.inite.scf.model.Empresa getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(br.com.inite.scf.model.Empresa empresa) {
+		this.empresa = empresa;
 	}
 	
 }

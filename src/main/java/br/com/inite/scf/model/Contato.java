@@ -15,6 +15,8 @@ package br.com.inite.scf.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="Contato")
@@ -42,6 +44,7 @@ public abstract class Contato implements Serializable {
 	@Column(name="Tipocontato", nullable=false, length=1)	
 	private boolean tipocontato;
 	
+	@JsonBackReference
 	@ManyToOne(targetEntity=br.com.inite.scf.model.Pessoa.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="PessoaID", referencedColumnName="ID") })	

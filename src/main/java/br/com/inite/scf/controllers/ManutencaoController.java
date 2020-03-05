@@ -1,4 +1,4 @@
-package br.com.inite.scf.resources;
+package br.com.inite.scf.controllers;
 
 import java.net.URI;
 import java.util.List;
@@ -18,7 +18,7 @@ import javassist.tools.rmi.ObjectNotFoundException;
 
 @RestController
 @RequestMapping(value = "/manutencao")
-public class ManutencaoResource {
+public class ManutencaoController {
 	
 	@Autowired
 	private ManutencaoService service;

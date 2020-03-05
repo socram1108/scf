@@ -1,4 +1,4 @@
-package br.com.inite.scf.resources;
+package br.com.inite.scf.controllers;
 
 import java.net.URI;
 import java.util.List;
@@ -12,25 +12,25 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import br.com.inite.scf.model.Pessoa;
-import br.com.inite.scf.services.PessoaService;
+import br.com.inite.scf.model.Cidade;
+import br.com.inite.scf.services.CidadeService;
 import javassist.tools.rmi.ObjectNotFoundException;
 
 @RestController
-@RequestMapping(value = "/pessoa")
-public class PessoaResource {
+@RequestMapping(value = "/cidade")
+public class CidadeController {
 	
 	@Autowired
-	private PessoaService service;
+	private CidadeService service;
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Pessoa> buscar(@PathVariable Integer id) throws ObjectNotFoundException {
-		Pessoa obj = service.buscarPorID(id);
+	public ResponseEntity<Cidade> buscar(@PathVariable Integer id) throws ObjectNotFoundException {
+		Cidade obj = service.buscarPorID(id);
 		return ResponseEntity.ok().body(obj);
 		
 	}
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> inserir(@RequestBody Pessoa obj){
+	public ResponseEntity<Void> inserir(@RequestBody Cidade obj){
 		obj = service.incluir(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getID()).toUri();
@@ -38,19 +38,19 @@ public class PessoaResource {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> gravar(@RequestBody Pessoa obj, @PathVariable Integer id) throws ObjectNotFoundException{
+	public ResponseEntity<Void> gravar(@RequestBody Cidade obj, @PathVariable Integer id) throws ObjectNotFoundException{
 		obj.setID(id);
 		obj = service.gravar(obj);
 		return ResponseEntity.noContent().build();
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<List<Pessoa>> Buscar() throws ObjectNotFoundException {
-		List<Pessoa> list = service.buscartodos();
+	public ResponseEntity<List<Cidade>> Buscar() throws ObjectNotFoundException {
+		List<Cidade> list = service.buscartodos();
 		return ResponseEntity.ok().body(list);
 	}
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-	public ResponseEntity<Void> excluir(@RequestBody Pessoa obj, @PathVariable Integer id) throws ObjectNotFoundException{
+	public ResponseEntity<Void> excluir(@RequestBody Cidade obj, @PathVariable Integer id) throws ObjectNotFoundException{
 		service.excluir(id);
 		return ResponseEntity.noContent().build();
 	}

@@ -32,6 +32,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
@@ -99,6 +100,7 @@ public class Endereco implements Serializable {
 	@Column(name="PontoReferencia", nullable=true, length=255)	
 	private String pontoReferencia;
 	
+	@JsonBackReference
 	@ManyToMany(mappedBy="endereco", targetEntity=br.com.inite.scf.model.Pessoa.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@OrderBy(value="ID")	

@@ -28,6 +28,8 @@ import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @org.hibernate.annotations.Proxy(lazy=true)
 @Table(name="Despesa")
@@ -56,6 +58,7 @@ public class Despesa implements Serializable {
 	@Column(name="Forncedor", nullable=true, length=255)	
 	private String forncedor;
 	
+	@JsonBackReference
 	@ManyToOne(targetEntity=br.com.inite.scf.model.Frete.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="FreteID", referencedColumnName="ID", insertable=false, updatable=false) })	

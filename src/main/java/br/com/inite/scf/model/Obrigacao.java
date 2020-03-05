@@ -15,6 +15,8 @@ package br.com.inite.scf.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="Obrigacao")
@@ -31,6 +33,7 @@ public abstract class Obrigacao implements Serializable {
 	@org.hibernate.annotations.GenericGenerator(name="VC0A8890117074CB7BB402E38", strategy="native")	
 	private Integer ID;
 	
+	@JsonBackReference
 	@ManyToOne(targetEntity=br.com.inite.scf.model.Veiculo.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="VeiculosID", referencedColumnName="ID", insertable=false, updatable=false) })	
@@ -58,10 +61,6 @@ public abstract class Obrigacao implements Serializable {
 	
 	public Integer getID() {
 		return ID;
-	}
-	
-	public Integer getORMID() {
-		return getID();
 	}
 	
 	public void setTipo(String value) {
