@@ -34,15 +34,15 @@ import javax.persistence.Table;
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="Veiculos")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-public class Veiculos implements Serializable {
+public class Veiculo implements Serializable {
 	private static final long serialVersionUID = 1L;
-	public Veiculos() {
+	public Veiculo() {
 	}
 	@Column(name="ID", nullable=false)	
 	@Id	
 	@GeneratedValue(generator="VC0A8890117098C1CEDE07A4F")	
 	@org.hibernate.annotations.GenericGenerator(name="VC0A8890117098C1CEDE07A4F", strategy="native")	
-	private int ID;
+	private Integer ID;
 	
 	@ManyToOne(targetEntity=br.com.inite.scf.model.Empresa.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
@@ -116,15 +116,15 @@ public class Veiculos implements Serializable {
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
 	private java.util.List<Obrigacao> obrigacao = new ArrayList<>();
 	
-	public void setID(int value) {
+	public void setID(Integer value) {
 		this.ID = value;
 	}
 	
-	public int getID() {
+	public Integer getID() {
 		return ID;
 	}
 	
-	public int getORMID() {
+	public Integer getORMID() {
 		return getID();
 	}
 	
@@ -152,10 +152,6 @@ public class Veiculos implements Serializable {
 		return modelo;
 	}
 	
-	public void setAnoModelo(int value) {
-		setAnoModelo(new Integer(value));
-	}
-	
 	public void setAnoModelo(Integer value) {
 		this.anoModelo = value;
 	}
@@ -163,11 +159,7 @@ public class Veiculos implements Serializable {
 	public Integer getAnoModelo() {
 		return anoModelo;
 	}
-	
-	public void setAnoFabricacao(int value) {
-		setAnoFabricacao(new Integer(value));
-	}
-	
+
 	public void setAnoFabricacao(Integer value) {
 		this.anoFabricacao = value;
 	}

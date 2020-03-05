@@ -26,10 +26,13 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
@@ -42,28 +45,34 @@ public class Cidade implements Serializable {
 	}
 	
 	
-	
+	@JsonBackReference
 	@OneToMany (mappedBy = "cidade")
 	private List<Endereco> endereco = new ArrayList<>();
 	
-	@OneToMany(mappedBy = "cidade")	
-	private List<Bairro> bairro = new ArrayList<>();
+	@JsonBackReference
+	@OneToMany(mappedBy = "cidade")
+	List<Bairro> bairro = new ArrayList<>();
 	
 		
 	@Column(name="ID", nullable=false)	
 	@Id	
 	@GeneratedValue(generator="VC0A8890117074CB7B9E02E37")	
 	@org.hibernate.annotations.GenericGenerator(name="VC0A8890117074CB7B9E02E37", strategy="native")	
-	private int ID;
-	
-	@ManyToOne	
-	@JoinColumn(name="EstadoID")	
-	private Estado estado;
+	private Integer ID;
 	
 	@JsonManagedReference
-	@ManyToOne	
-	@JoinColumn(name="PaisID")	
-	private Pais pais;
+	@ManyToOne(targetEntity=br.com.inite.scf.model.Estado.class)	
+	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
+	@JoinColumns({ @JoinColumn(name="EstadoID", referencedColumnName="ID", insertable=false, updatable=false) })	
+	@Basic(fetch=FetchType.LAZY)	
+	private br.com.inite.scf.model.Estado estado;
+	
+	@JsonIgnore
+	@ManyToOne(targetEntity=br.com.inite.scf.model.Pais.class)	
+	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
+	@JoinColumns({ @JoinColumn(name="PaisID", referencedColumnName="ID", insertable=false, updatable=false) })	
+	@Basic(fetch=FetchType.LAZY)	
+	private br.com.inite.scf.model.Pais pais;
 	
 	@Column(name="Nome", nullable=true, length=255)	
 	private String nome;
@@ -77,9 +86,11 @@ public class Cidade implements Serializable {
 	@Column(name="Lei", nullable=true, length=255)	
 	private String lei;
 	
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	@Column(name="DtCriacao", nullable=true)	
 	private java.util.Date dtCriacao;
 	
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	@Column(name="DtInstalacao", nullable=true)	
 	private java.util.Date dtInstalacao;
 	
@@ -123,15 +134,13 @@ public class Cidade implements Serializable {
 	@Column(name="ComplIDIbge", nullable=true, length=255)	
 	private String complIDIbge;
 		
-	public void setID(int value) {
+	public void setID(Integer value) {
 		this.ID = value;
 	}
 	
-	public int getID() {
+	public Integer getID() {
 		return ID;
 	}
-	
-	
 	
 	public String getNomeCompleto() {
 		return nomeCompleto;
@@ -285,16 +294,15 @@ public class Cidade implements Serializable {
 		return nome;
 	}
 			
-	public void setEstado(br.com.inite.scf.model.Estado value) {
+	public void setEstado(Estado value) {
 		if (estado != null) {
-			estado.getCidade().remove(this);
+			estado.cidade.remove(this);
 		}
 		if (value != null) {
-			value.getCidade().add(this);
+			value.cidade.add(this);
 		}
 	}
 	
-	@JsonIgnore
 	public List<Endereco> getEndereco() {
 		return endereco;
 	}
@@ -303,13 +311,20 @@ public class Cidade implements Serializable {
 		this.endereco = endereco;
 	}
 	
-	@JsonIgnore
 	public List<Bairro> getBairro() {
 		return bairro;
 	}
 
 	public void setBairro(List<Bairro> bairro) {
 		this.bairro = bairro;
+	}
+
+	public Pais getPais() {
+		return pais;
+	}
+
+	public void setPais(Pais pais) {
+		this.pais = pais;
 	}
 	
 }

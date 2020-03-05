@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import br.com.inite.scf.model.Pais;
 import br.com.inite.scf.repositories.PaisRepository;
+import br.com.inite.scf.services.exceptions.DataIntegrityException;
 import javassist.tools.rmi.ObjectNotFoundException;
 
 @Service
@@ -24,18 +26,28 @@ public class PaisService {
 	}
 	
 	
-	public Pais inserirPais(Pais obj) {
+	public Pais incluir(Pais obj) {
 		obj.setID(null);
 		return repo.save(obj);
 	}
 	
-	public Pais gravarPais(Pais obj) throws ObjectNotFoundException {
+	public Pais gravar(Pais obj) throws ObjectNotFoundException {
 		buscarPorID(obj.getID());
 		return repo.save(obj);
 	}
 	
-	public List<Pais> buscarPaises() throws ObjectNotFoundException {
+	public List<Pais> buscartodos() throws ObjectNotFoundException {
 		return repo.findAll();
+	}
+	
+	public void excluir(Integer ID) throws ObjectNotFoundException {
+		buscarPorID(ID);
+		try {
+				repo.deleteById(ID);
+		}
+		catch(DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é Possivel Excluir Pais");
+		}
 	}
 
 }

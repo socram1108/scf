@@ -29,13 +29,13 @@ public class Manutencao implements Serializable {
 	@Id	
 	@GeneratedValue(generator="VC0A8890117074CB7D5802E3E")	
 	@org.hibernate.annotations.GenericGenerator(name="VC0A8890117074CB7D5802E3E", strategy="native")	
-	private int ID;
+	private Integer ID;
 	
-	@ManyToOne(targetEntity=br.com.inite.scf.model.Veiculos.class)	
+	@ManyToOne(targetEntity=br.com.inite.scf.model.Veiculo.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="VeiculosID", referencedColumnName="ID", insertable=false, updatable=false) })	
 	@Basic(fetch=FetchType.LAZY)	
-	private br.com.inite.scf.model.Veiculos veiculos;
+	private br.com.inite.scf.model.Veiculo veiculos;
 	
 	@Column(name="Tipo", nullable=true, length=255)	
 	private String tipo;
@@ -58,15 +58,15 @@ public class Manutencao implements Serializable {
 	@Column(name="Descricao", nullable=true, length=255)	
 	private String descricao;
 	
-	public void setID(int value) {
+	public void setID(Integer value) {
 		this.ID = value;
 	}
 	
-	public int getID() {
+	public Integer getID() {
 		return ID;
 	}
 	
-	public int getORMID() {
+	public Integer getORMID() {
 		return getID();
 	}
 	
@@ -134,7 +134,7 @@ public class Manutencao implements Serializable {
 		return descricao;
 	}
 	
-	public void setVeiculos(br.com.inite.scf.model.Veiculos value) {
+	public void setVeiculos(br.com.inite.scf.model.Veiculo value) {
 		if (veiculos != null) {
 			veiculos.getManutencao().remove(this);
 		}
@@ -143,11 +143,11 @@ public class Manutencao implements Serializable {
 		}
 	}
 	
-	public br.com.inite.scf.model.Veiculos getVeiculos() {
+	public br.com.inite.scf.model.Veiculo getVeiculos() {
 		return veiculos;
 	}
 	
-	public void setORM_Veiculos(br.com.inite.scf.model.Veiculos value) {
+	public void setORM_Veiculos(br.com.inite.scf.model.Veiculo value) {
 		this.veiculos = value;
 	}
 	

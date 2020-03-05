@@ -7,36 +7,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import br.com.inite.scf.model.Frete;
-import br.com.inite.scf.repositories.FreteRepository;
+import br.com.inite.scf.model.Veiculo;
+import br.com.inite.scf.repositories.VeiculoRepository;
 import br.com.inite.scf.services.exceptions.DataIntegrityException;
 import javassist.tools.rmi.ObjectNotFoundException;
 
 @Service
-public class FreteService {
+public class VeiculoService {
 	
 	@Autowired
-	FreteRepository repo;
+	VeiculoRepository repo;
 	
-	public Frete buscarPorID(Integer ID) throws ObjectNotFoundException {
-		Optional<Frete> obj = repo.findById(ID);
+	public Veiculo buscarPorID(Integer ID) throws ObjectNotFoundException {
+		Optional<Veiculo> obj = repo.findById(ID);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id:" + ID + ";Tipo: " + Frete.class.getName()));
+				"Objeto não encontrado! Id:" + ID + ";Tipo: " + Veiculo.class.getName()));
 		
 	}
 	
 	
-	public Frete incluir(Frete obj) {
+	public Veiculo incluir(Veiculo obj) {
 		obj.setID(null);
 		return repo.save(obj);
 	}
 	
-	public Frete gravar(Frete obj) throws ObjectNotFoundException {
+	public Veiculo gravar(Veiculo obj) throws ObjectNotFoundException {
 		buscarPorID(obj.getID());
 		return repo.save(obj);
 	}
 	
-	public List<Frete> buscartodos() throws ObjectNotFoundException {
+	public List<Veiculo> buscartodos() throws ObjectNotFoundException {
 		return repo.findAll();
 	}
 	
@@ -46,7 +46,7 @@ public class FreteService {
 				repo.deleteById(ID);
 		}
 		catch(DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Não é Possivel Excluir Frete");
+			throw new DataIntegrityException("Não é Possivel Excluir Veiculo");
 		}
 	}
 

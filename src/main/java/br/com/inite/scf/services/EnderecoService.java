@@ -7,36 +7,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import br.com.inite.scf.model.Frete;
-import br.com.inite.scf.repositories.FreteRepository;
+import br.com.inite.scf.model.Endereco;
+import br.com.inite.scf.repositories.EnderecoRepository;
 import br.com.inite.scf.services.exceptions.DataIntegrityException;
 import javassist.tools.rmi.ObjectNotFoundException;
 
 @Service
-public class FreteService {
+public class EnderecoService {
 	
 	@Autowired
-	FreteRepository repo;
+	EnderecoRepository repo;
 	
-	public Frete buscarPorID(Integer ID) throws ObjectNotFoundException {
-		Optional<Frete> obj = repo.findById(ID);
+	public Endereco buscarPorID(Integer ID) throws ObjectNotFoundException {
+		Optional<Endereco> obj = repo.findById(ID);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id:" + ID + ";Tipo: " + Frete.class.getName()));
+				"Objeto não encontrado! Id:" + ID + ";Tipo: " + Endereco.class.getName()));
 		
 	}
 	
 	
-	public Frete incluir(Frete obj) {
+	public Endereco incluir(Endereco obj) {
 		obj.setID(null);
 		return repo.save(obj);
 	}
 	
-	public Frete gravar(Frete obj) throws ObjectNotFoundException {
+	public Endereco gravar(Endereco obj) throws ObjectNotFoundException {
 		buscarPorID(obj.getID());
 		return repo.save(obj);
 	}
 	
-	public List<Frete> buscartodos() throws ObjectNotFoundException {
+	public List<Endereco> buscartodos() throws ObjectNotFoundException {
 		return repo.findAll();
 	}
 	
@@ -46,7 +46,7 @@ public class FreteService {
 				repo.deleteById(ID);
 		}
 		catch(DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Não é Possivel Excluir Frete");
+			throw new DataIntegrityException("Não é Possivel Excluir Endereco");
 		}
 	}
 

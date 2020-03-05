@@ -27,6 +27,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="Bairro")
@@ -38,30 +40,27 @@ public class Bairro implements Serializable {
 	@Id	
 	@GeneratedValue(generator="VC0A8890117074CB7B8902E36")	
 	@org.hibernate.annotations.GenericGenerator(name="VC0A8890117074CB7B8902E36", strategy="native")	
-	private int ID;
+	private Integer ID;
 	private String nome;
 	
 	public Bairro() {
 	}
 	
-	@OneToMany(mappedBy = "bairro")	
-	private List<Endereco> endereco = new ArrayList<>();
+	@JsonBackReference
+	@OneToMany(mappedBy = "bairro") 
+	List<Endereco> endereco = new ArrayList<>();
 	
-	
+	@JsonBackReference
 	@ManyToOne	
 	@JoinColumn(name="CidadeID")	
 	private Cidade cidade;
 	
-	public void setID(int value) {
+	public void setID(Integer value) {
 		this.ID = value;
 	}
 	
-	public int getID() {
+	public Integer getID() {
 		return ID;
-	}
-	
-	public int getORMID() {
-		return getID();
 	}
 	
 	public void setNome(String value) {
@@ -74,10 +73,10 @@ public class Bairro implements Serializable {
 	
 	public void setCidade(Cidade value) {
 		if (cidade != null) {
-			cidade.getBairro().remove(this);
+			cidade.bairro.remove(this);
 		}
 		if (value != null) {
-			value.getBairro().add(this);
+			value.bairro.add(this);
 		}
 	}
 	
@@ -85,13 +84,6 @@ public class Bairro implements Serializable {
 		return cidade;
 	}
 	
-	/**
-	 * This method is for internal use only.
-	 */
-	public void setORM_Cidade(Cidade value) {
-		this.cidade = value;
-	}
-
 	public List<Endereco> getEndereco() {
 		return endereco;
 	}

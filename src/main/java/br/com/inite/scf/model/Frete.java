@@ -54,7 +54,7 @@ public class Frete implements Serializable {
 	@Id	
 	@GeneratedValue(generator="VC0A8890117098C1CF2407A50")	
 	@org.hibernate.annotations.GenericGenerator(name="VC0A8890117098C1CF2407A50", strategy="native")	
-	private int ID;
+	private Integer ID;
 	
 	@Column(name="Origem", nullable=true, length=255)	
 	private String origem;
@@ -86,7 +86,7 @@ public class Frete implements Serializable {
 	public Frete() {
 	}
 		
-	public Frete(int iD, String origem, String destino, Timestamp dataSaida, Timestamp dataChegada, Integer kmInicial,
+	public Frete(Integer iD, String origem, String destino, Timestamp dataSaida, Timestamp dataChegada, Integer kmInicial,
 			Integer kmFinal, Double valorFrete, Double comissao, Double adiantamento) {
 		super();
 		ID = iD;
@@ -101,11 +101,11 @@ public class Frete implements Serializable {
 		this.adiantamento = adiantamento;
 	}
 
-	public int getID() {
+	public Integer getID() {
 		return ID;
 	}
 
-	public void setID(int iD) {
+	public void setID(Integer iD) {
 		ID = iD;
 	}
 
@@ -192,7 +192,7 @@ public class Frete implements Serializable {
 	@Override
 	public int hashCode() {
 		final int prime = 31;
-		int result = 1;
+		Integer result = 1;
 		result = prime * result + ID;
 		return result;
 	}

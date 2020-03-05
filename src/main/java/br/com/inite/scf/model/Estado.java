@@ -17,7 +17,22 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="Estado")
@@ -25,10 +40,19 @@ import javax.persistence.*;
 public class Estado implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@JsonBackReference
+	@OneToMany(mappedBy = "estado") 
+	List<Cidade> cidade = new ArrayList<>();
+	
+	@JsonManagedReference
+	@ManyToOne	
+	@JoinColumn(name="PaisID")	
+	private Pais pais;
+	
 	@Column(name="ID", nullable=false)	
 	@Id	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	
-	private int ID;
+	private Integer ID;
 	@Column(name="Nome", nullable=true, length=255)	
 	private String nome;
 	
@@ -71,19 +95,11 @@ public class Estado implements Serializable {
 	public Estado() {
 	}
 	
-	@OneToMany(mappedBy = "estado")	
-	private List<Cidade> cidade = new ArrayList<>();
-	
-	
-	@ManyToOne	
-	@JoinColumn(name="PaisID")	
-	private Pais pais;
-	
-	public void setID(int value) {
+	public void setID(Integer value) {
 		this.ID = value;
 	}
 	
-	public int getID() {
+	public Integer getID() {
 		return ID;
 	}
 	
@@ -194,10 +210,10 @@ public class Estado implements Serializable {
 	}
 	public void setPais(br.com.inite.scf.model.Pais value) {
 		if (pais != null) {
-			pais.getEstado().remove(this);
+			pais.estado.remove(this);
 		}
 		if (value != null) {
-			value.getEstado().add(this);
+			value.estado.add(this);
 		}
 	}
 

@@ -42,7 +42,7 @@ public class Despesa implements Serializable {
 	@Id	
 	@GeneratedValue(generator="VC0A88901170989BA9E400B3D")	
 	@org.hibernate.annotations.GenericGenerator(name="VC0A88901170989BA9E400B3D", strategy="native")	
-	private int ID;
+	private Integer ID;
 	
 	@Column(name="Valor", nullable=false)	
 	private double valor;
@@ -62,11 +62,11 @@ public class Despesa implements Serializable {
 	@Basic(fetch=FetchType.LAZY)	
 	private br.com.inite.scf.model.Frete frete;
 	
-	public void setID(int value) {
+	public void setID(Integer value) {
 		this.ID = value;
 	}
 	
-	public int getID() {
+	public Integer getID() {
 		return ID;
 	}
 	

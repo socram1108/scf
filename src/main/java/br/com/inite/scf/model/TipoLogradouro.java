@@ -26,37 +26,51 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="Tipologradouro")
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-public class Tipologradouro implements Serializable {
+public class TipoLogradouro implements Serializable {
 	private static final long serialVersionUID = 1L;
-	public Tipologradouro() {
+	public TipoLogradouro() {
 	}
 	
-	@OneToMany(mappedBy = "tipologradouro")	
-	private List<Logradouro> logradouro = new ArrayList<>();
+	@JsonBackReference
+	@OneToMany(mappedBy = "tipologradouro") 
+	List<Logradouro> logradouro = new ArrayList<>();
 	
 
 	@Column(name="ID", nullable=false)	
 	@Id	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)	
-	private int ID;
+	private Integer ID;
 	
 	@Column(name="Nome", nullable=true, length=255)	
 	private String nome;
+	
+	@Column(name="NomeAbreciado", nullable=true, length=255)	
+	private String nomeAbreciado;
+	
+	@Column(name="ExpressaoRegular", nullable=true, length=255)	
+	private String expressaoRegular;
+	
+	@Column(name="Normalizado", nullable=true, length=11)	
+	private Integer normalizado;
+	
+	@Column(name="Versao", nullable=true, length=11)	
+	private Integer versao;
+	
 
-	public void setID(int value) {
+	public void setID(Integer value) {
 		this.ID = value;
 	}
 	
-	public int getID() {
+	public Integer getID() {
 		return ID;
-	}
-	
-	public int getORMID() {
-		return getID();
 	}
 	
 	public void setNome(String value) {
@@ -66,7 +80,38 @@ public class Tipologradouro implements Serializable {
 	public String getNome() {
 		return nome;
 	}
-
+	
+	public void setNomeAbreciado(String value) {
+		this.nomeAbreciado = value;
+	}
+	
+	public String getNomeAbreciado() {
+		return nomeAbreciado;
+	}
+	
+	public void setExpressaoRegular(String value) {
+		this.expressaoRegular = value;
+	}
+	
+	public String getExpressaoRegular() {
+		return expressaoRegular;
+	}
+	
+	public void setNormalizado(Integer value) {
+		this.normalizado = value;
+	}
+	
+	public Integer getNormalizado() {
+		return normalizado;
+	}
+	
+	public void setVersao(Integer value) {
+		this.versao = value;
+	}
+	
+	public Integer getVersao() {
+		return versao;
+	}
 	public List<Logradouro> getLogradouro() {
 		return logradouro;
 	}

@@ -42,13 +42,13 @@ public class Frota implements Serializable {
 	@Id	
 	@GeneratedValue(generator="VC0A8890117098C1CCE607A4A")	
 	@org.hibernate.annotations.GenericGenerator(name="VC0A8890117098C1CCE607A4A", strategy="native")	
-	private int ID;
+	private Integer ID;
 	
-	@ManyToOne(targetEntity=br.com.inite.scf.model.Veiculos.class)	
+	@ManyToOne(targetEntity=br.com.inite.scf.model.Veiculo.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="VeiculosID", referencedColumnName="ID") })	
 	@Basic(fetch=FetchType.LAZY)	
-	private br.com.inite.scf.model.Veiculos veiculos;
+	private br.com.inite.scf.model.Veiculo veiculos;
 	
 	@Column(name="DataInicio", nullable=true)	
 	private java.util.Date dataInicio;
@@ -73,15 +73,15 @@ public class Frota implements Serializable {
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
 	private java.util.List<Frete> frete = new ArrayList<>();
 	
-	public void setID(int value) {
+	public void setID(Integer value) {
 		this.ID = value;
 	}
 	
-	public int getID() {
+	public Integer getID() {
 		return ID;
 	}
 	
-	public int getORMID() {
+	public Integer getORMID() {
 		return getID();
 	}
 	
@@ -107,10 +107,6 @@ public class Frota implements Serializable {
 	
 	public String getDescricao() {
 		return descricao;
-	}
-	
-	public void setVeicculo(int value) {
-		setVeicculo(new Integer(value));
 	}
 	
 	public void setVeicculo(Integer value) {

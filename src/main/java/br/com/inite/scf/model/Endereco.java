@@ -31,6 +31,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OrderBy;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="Endereco")
@@ -44,20 +46,23 @@ public class Endereco implements Serializable {
 	@Id
 	@GeneratedValue(generator="VC0A8890117084422E3E08A78")	
 	@org.hibernate.annotations.GenericGenerator(name="VC0A8890117084422E3E08A78", strategy="native")	
-	private int ID;
+	private Integer ID;
 	
+	@JsonManagedReference
 	@ManyToOne(targetEntity=br.com.inite.scf.model.Bairro.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="BairroID", referencedColumnName="ID", insertable=false, updatable=false) })	
 	@Basic(fetch=FetchType.LAZY)	
 	private br.com.inite.scf.model.Bairro bairro;
 	
+	@JsonManagedReference
 	@ManyToOne(targetEntity=br.com.inite.scf.model.Logradouro.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="LogradouroID", referencedColumnName="ID", insertable=false, updatable=false) })	
 	@Basic(fetch=FetchType.LAZY)	
 	private br.com.inite.scf.model.Logradouro logradouro;
 	
+	@JsonManagedReference
 	@ManyToOne(targetEntity=br.com.inite.scf.model.Cidade.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumns({ @JoinColumn(name="CidadeID", referencedColumnName="ID", insertable=false, updatable=false) })	
@@ -100,11 +105,11 @@ public class Endereco implements Serializable {
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
 	private List<Pessoa> pessoa = new ArrayList<>();
 	
-	public void setID(int value) {
+	public void setID(Integer value) {
 		this.ID = value;
 	}
 	
-	public int getID() {
+	public Integer getID() {
 		return ID;
 	}
 	
@@ -148,10 +153,6 @@ public class Endereco implements Serializable {
 		return latitude;
 	}
 	
-	public void setIdDne(int value) {
-		setIdDne(new Integer(value));
-	}
-	
 	public void setIdDne(Integer value) {
 		this.idDne = value;
 	}
@@ -159,11 +160,7 @@ public class Endereco implements Serializable {
 	public Integer getIdDne() {
 		return idDne;
 	}
-	
-	public void setNormalizado(int value) {
-		setNormalizado(new Integer(value));
-	}
-	
+
 	public void setNormalizado(Integer value) {
 		this.normalizado = value;
 	}
@@ -171,11 +168,7 @@ public class Endereco implements Serializable {
 	public Integer getNormalizado() {
 		return normalizado;
 	}
-	
-	public void setVersao(int value) {
-		setVersao(new Integer(value));
-	}
-	
+
 	public void setVersao(Integer value) {
 		this.versao = value;
 	}
@@ -202,10 +195,10 @@ public class Endereco implements Serializable {
 	
 	public void setBairro(br.com.inite.scf.model.Bairro value) {
 		if (bairro != null) {
-			bairro.getEndereco().remove(this);
+			bairro.endereco.remove(this);
 		}
 		if (value != null) {
-			value.getEndereco().add(this);
+			value.endereco.add(this);
 		}
 	}
 	

@@ -56,7 +56,7 @@ public class Pessoa implements Serializable {
 	@Id	
 	@GeneratedValue(generator="VC0A8890117074CB7C2902E39")	
 	@org.hibernate.annotations.GenericGenerator(name="VC0A8890117074CB7C2902E39", strategy="native")	
-	private int ID;
+	private Integer ID;
 	
 	@Column(name="TipoPessoa", nullable=false, length=11)	
 	private Integer tipoPessoa;
@@ -69,11 +69,11 @@ public class Pessoa implements Serializable {
 	
 	
 	
-	public void setID(int value) {
+	public void setID(Integer value) {
 		this.ID = value;
 	}
 	
-	public int getID() {
+	public Integer getID() {
 		return ID;
 	}
 	

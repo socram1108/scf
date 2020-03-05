@@ -29,10 +29,10 @@ public class Empresa extends br.com.inite.scf.model.Pessoajuridica implements Se
 	public Empresa() {
 	}
 	
-	@OneToMany(targetEntity=br.com.inite.scf.model.Veiculos.class)	
+	@OneToMany(targetEntity=br.com.inite.scf.model.Veiculo.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@JoinColumn(name="EmpresaPessoaID", nullable=false)	
-	private List<Veiculos> veiculos = new ArrayList<>();
+	private List<Veiculo> veiculos = new ArrayList<>();
 	
 	
 	private Blob LOGO;
@@ -45,11 +45,11 @@ public class Empresa extends br.com.inite.scf.model.Pessoajuridica implements Se
 		return LOGO;
 	}
 
-	public List<Veiculos> getVeiculos() {
+	public List<Veiculo> getVeiculos() {
 		return veiculos;
 	}
 
-	public void setVeiculos(List<Veiculos> veiculos) {
+	public void setVeiculos(List<Veiculo> veiculos) {
 		this.veiculos = veiculos;
 	}
 }

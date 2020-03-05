@@ -19,14 +19,13 @@ import java.util.ArrayList;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 @Entity
 @org.hibernate.annotations.Proxy(lazy=false)
 @Table(name="Pais")
@@ -38,7 +37,8 @@ public class Pais implements Serializable {
 	
 	@Column(name="ID", nullable=false)	
 	@Id	
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(generator="VC0A88901170A7DEA4DD0D1E5")	
+	@org.hibernate.annotations.GenericGenerator(name="VC0A88901170A7DEA4DD0D1E5", strategy="native")	
 	private Integer ID;
 	
 	@Column(name="Nome", nullable=true, length=255)	
@@ -80,23 +80,23 @@ public class Pais implements Serializable {
 	@Column(name="Versao", nullable=true, length=11)	
 	private Integer versao;
 	
-	
+	@JsonBackReference
 	@OneToMany(targetEntity=br.com.inite.scf.model.Cidade.class)	
 	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
-	private java.util.List<Cidade> cidade = new ArrayList<>();
+	private java.util.List<Cidade> cidades = new ArrayList<>();
 	
-	
+	@JsonBackReference
 	@OneToMany(targetEntity=br.com.inite.scf.model.Endereco.class)	
-	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
+	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})			
 	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
 	private java.util.List<Endereco> endereco = new ArrayList<>();
 	
-	
+	@JsonBackReference
 	@OneToMany(targetEntity=br.com.inite.scf.model.Estado.class)	
-	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})	
-	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)	
-	private java.util.List<Estado> estado = new ArrayList<>();
+	@org.hibernate.annotations.Cascade({org.hibernate.annotations.CascadeType.SAVE_UPDATE, org.hibernate.annotations.CascadeType.LOCK})		
+	@org.hibernate.annotations.LazyCollection(org.hibernate.annotations.LazyCollectionOption.TRUE)
+	java.util.List<Estado> estado = new ArrayList<>();
 	
 	public void setID(Integer value) {
 		this.ID = value;
@@ -130,10 +130,6 @@ public class Pais implements Serializable {
 		return nomeInternacional;
 	}
 	
-	public void setDdi(int value) {
-		setDdi(new Integer(value));
-	}
-	
 	public void setDdi(Integer value) {
 		this.ddi = value;
 	}
@@ -158,20 +154,12 @@ public class Pais implements Serializable {
 		return siglaIso3;
 	}
 	
-	public void setIdSerpro(int value) {
-		setIdSerpro(new Integer(value));
-	}
-	
 	public void setIdSerpro(Integer value) {
 		this.idSerpro = value;
 	}
 	
 	public Integer getIdSerpro() {
 		return idSerpro;
-	}
-	
-	public void setIdIbge(int value) {
-		setIdIbge(new Integer(value));
 	}
 	
 	public void setIdIbge(Integer value) {
@@ -182,10 +170,6 @@ public class Pais implements Serializable {
 		return idIbge;
 	}
 	
-	public void setIdIso(int value) {
-		setIdIso(new Integer(value));
-	}
-	
 	public void setIdIso(Integer value) {
 		this.idIso = value;
 	}
@@ -193,11 +177,7 @@ public class Pais implements Serializable {
 	public Integer getIdIso() {
 		return idIso;
 	}
-	
-	public void setBandeira(int value) {
-		setBandeira(new Integer(value));
-	}
-	
+
 	public void setBandeira(Integer value) {
 		this.bandeira = value;
 	}
@@ -205,11 +185,7 @@ public class Pais implements Serializable {
 	public Integer getBandeira() {
 		return bandeira;
 	}
-	
-	public void setBrasao(int value) {
-		setBrasao(new Integer(value));
-	}
-	
+
 	public void setBrasao(Integer value) {
 		this.brasao = value;
 	}
@@ -225,43 +201,9 @@ public class Pais implements Serializable {
 	public String getNacionalidade() {
 		return nacionalidade;
 	}
-	
-	public void setVersao(int value) {
-		setVersao(new Integer(value));
-	}
-	
+
 	public void setVersao(Integer value) {
 		this.versao = value;
 	}
-	
-	public Integer getVersao() {
-		return versao;
-	}
-	@JsonIgnore
-	public java.util.List<Estado> getEstado() {
-		return estado;
-	}
-	@JsonIgnore
-	public void setEstado(java.util.List<Estado> estado) {
-		this.estado = estado;
-	}
-	@JsonIgnore
-	public java.util.List<Endereco> getEndereco() {
-		return endereco;
-	}
-	@JsonIgnore
-	public void setEndereco(java.util.List<Endereco> endereco) {
-		this.endereco = endereco;
-	}
-	
-	@JsonIgnore
-	public java.util.List<Cidade> getCidade() {
-		return cidade;
-	}
-	@JsonIgnore
-	public void setCidade(java.util.List<Cidade> cidade) {
-		this.cidade = cidade;
-	}
-	
 	
 }
